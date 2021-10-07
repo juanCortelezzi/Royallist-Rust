@@ -1,56 +1,47 @@
-use royallist::path;
-use std::fs;
-use std::io::{self, Write};
+use royallist::{buffers, icons, paths};
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
-use termcolor::{Buffer, BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
 
 #[derive(StructOpt)]
 struct Cli {
     #[structopt(parse(from_os_str))]
-    path: std::path::PathBuf,
-}
-
-/// read_dir reads the passed directory and returns a vec with its contents
-fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<Vec<PathBuf>> {
-    let entries = fs::read_dir(path)?
-        .map(|res| res.map(|e| e.path()))
-        .collect::<Result<Vec<_>, io::Error>>()?;
-
-    Ok(entries)
-}
-
-fn write_entry(stdout: &mut Buffer, icon: char, name: &str, color: Color) -> io::Result<()> {
-    stdout.set_color(ColorSpec::new().set_fg(Some(color)))?;
-    write!(stdout, "{} ", icon)?;
-    stdout.reset()?;
-    writeln!(stdout, "{}", name)?;
-    Ok(())
+    files: Vec<PathBuf>,
 }
 
 fn main() {
     let args = Cli::from_args();
-    let mut entries = read_dir(&args.path).expect("could not read dir");
+    let stdout = buffers::StdoutBuffer::new();
+    if args.files.len() == 1 {
+        common_print(&args.files[0], &stdout);
+    } else {
+        for path in args.files {
+            println!("---- {} ----", path.display());
+            common_print(&path, &stdout);
+            println!()
+        }
+    }
+}
+
+fn common_print(path: &Path, stdout: &buffers::StdoutBuffer) {
+    let mut entries = paths::read_dir(&path).expect("could not read dir");
 
     entries.sort();
 
-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
-    let mut buffer = bufwtr.buffer();
-
-    let dirbufwtr = BufferWriter::stderr(ColorChoice::Always);
-    let mut dirbuffer = bufwtr.buffer();
+    let mut filebuf = stdout.buffer();
+    let mut dirbuf = stdout.buffer();
 
     for entry in entries {
-        let name = path::path_filename(&entry);
+        let name = paths::get_filename(&entry);
 
         if entry.as_path().is_dir() {
-            write_entry(&mut dirbuffer, '', &name, Color::Cyan).unwrap();
+            let icon = icons::match_dir_icon(&name);
+            stdout.write_entry(&mut dirbuf, icon, &name).unwrap();
         } else {
-            let (icon, color) = path::match_icon(&path::path_extension(&entry));
-            write_entry(&mut buffer, icon, &name, color).unwrap();
+            let icon = icons::match_ext_icon(&paths::get_extension(&entry));
+            stdout.write_entry(&mut filebuf, icon, &name).unwrap();
         }
     }
 
-    dirbufwtr.print(&dirbuffer).unwrap();
-    bufwtr.print(&buffer).unwrap();
+    stdout.flush(&dirbuf).unwrap();
+    stdout.flush(&filebuf).unwrap();
 }
