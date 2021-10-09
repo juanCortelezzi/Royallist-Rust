@@ -17,3 +17,6 @@ benchcmp: buildrel
 		-w 10 \
 		-L TEST "./target/release/royallist,ls" \
 		"{TEST} ~/Documents/Web-programes/next-blog"
+
+install: buildrel
+	doas mv ./target/release/royallist /usr/bin/royallist
