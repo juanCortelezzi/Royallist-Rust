@@ -38,6 +38,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "sum" => Some(('', White)),
         "toml" => Some(('', White)),
         "lock" => Some(('', White)),
+        "excalidraw" => Some(('ﲅ', White)),
         _ => None,
     }
 }
