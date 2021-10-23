@@ -5,6 +5,8 @@ A glorified "ls" command.
 
 Don't be surprised, it's just ls with icons and rewritten in Rust
 
+![Royallist example](./.github/assets/royallist-nextjs.png)
+
 ## How to use?
 
 Call royallist and watch you current directory files shine in the terminal. If you want to use
@@ -28,6 +30,12 @@ Just add the following to your shell RC file
 ```bash
 alias l="royallist"
 ```
+
+## Icons
+
+All icons can be changed in the `./src/icons.rs` file. Keep in mind that you
+must use a font that suports those icons. In this case, all icons are part of
+the `NerdFont` icon suite.
 
 ## Install
 
