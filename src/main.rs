@@ -1,4 +1,8 @@
-use royallist::{buffers, prints};
+mod buffers;
+mod icons;
+mod paths;
+mod prints;
+
 use std::path::PathBuf;
 use structopt::StructOpt;
 
