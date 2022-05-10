@@ -17,6 +17,8 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "yml" => Some(('', Yellow)),
         "yaml" => Some(('', Yellow)),
         "js" => Some(('', Yellow)),
+        "mjs" => Some(('', Yellow)),
+        "cjs" => Some(('', Yellow)),
         "jsx" => Some(('', Yellow)),
         "mp4" => Some(('', Blue)),
         "cpp" => Some(('', Blue)),
