@@ -14,22 +14,24 @@ pub fn common_print(path: &Path, stdout: &crate::buffers::StdoutBuffer) {
         let name = paths::get_filename(&entry);
 
         if entry.as_path().is_dir() {
-            let icon = match icons::match_dir_icon(&name) {
-                Some(icon) => icon,
-                None => icons::get_default_icon(icons::PathType::Dir),
-            };
-            stdout.write_entry(&mut dirbuf, icon, &name).unwrap();
-        } else {
-            let icon = match icons::match_ext_icon(&paths::get_extension(&entry)) {
-                Some(icon) => icon,
-                None => match icons::match_name_icon(&name) {
-                    Some(icon) => icon,
-                    None => icons::get_default_icon(icons::PathType::File),
-                },
-            };
+            let icon = icons::match_dir_icon(&name)
+                .unwrap_or_else(|| icons::get_default_icon(icons::PathType::Dir));
 
-            stdout.write_entry(&mut filebuf, icon, &name).unwrap();
+            stdout.write_entry(&mut dirbuf, icon, &name).unwrap();
+            continue;
         }
+
+        let extension = paths::get_extension(&entry);
+
+        if let Some(icon) = icons::match_ext_icon(&extension) {
+            stdout.write_entry(&mut filebuf, icon, &name).unwrap();
+            continue;
+        }
+
+        let icon = icons::match_name_icon(&name)
+            .unwrap_or_else(|| icons::get_default_icon(icons::PathType::File));
+
+        stdout.write_entry(&mut filebuf, icon, &name).unwrap();
     }
 
     stdout.flush(&dirbuf).unwrap();
