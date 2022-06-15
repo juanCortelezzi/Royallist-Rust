@@ -9,8 +9,9 @@ pub struct StdoutBuffer {
 
 impl StdoutBuffer {
     pub fn new() -> Self {
-        let bufwtr = BufferWriter::stderr(ColorChoice::Always);
-        Self { bufwtr }
+        Self {
+            bufwtr: BufferWriter::stdout(ColorChoice::Always),
+        }
     }
 
     pub fn flush(&self, buffer: &Buffer) -> io::Result<()> {
@@ -25,8 +26,7 @@ impl StdoutBuffer {
         buffer.set_color(ColorSpec::new().set_fg(Some(icon.1)))?;
         write!(buffer, "{} ", icon.0)?;
         buffer.reset()?;
-        writeln!(buffer, "{}", name)?;
-        Ok(())
+        writeln!(buffer, "{}", name)
     }
 }
 
