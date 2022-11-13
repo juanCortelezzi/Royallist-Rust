@@ -3,7 +3,7 @@ use crate::paths;
 use std::path::Path;
 
 pub fn common_print(path: &Path, stdout: &crate::buffers::StdoutBuffer) {
-    let mut entries = paths::read_dir(&path).expect("could not read dir");
+    let mut entries = paths::read_dir(path).expect("could not read dir");
 
     entries.sort();
 
