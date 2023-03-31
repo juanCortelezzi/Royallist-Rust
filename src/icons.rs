@@ -39,6 +39,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "wiki" => Some(('', White)),
         "mod" => Some(('', White)),
         "sum" => Some(('', White)),
+        "work" => Some(('', White)),
         "toml" => Some(('', White)),
         "lock" => Some(('', White)),
         "excalidraw" => Some(('ﲅ', White)),
