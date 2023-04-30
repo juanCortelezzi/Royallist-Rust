@@ -20,6 +20,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "mjs" => Some(('', Yellow)),
         "cjs" => Some(('', Yellow)),
         "jsx" => Some(('', Yellow)),
+        "zig" => Some(('', Yellow)),
         "mp4" | "mkv" => Some(('', Blue)),
         "cpp" => Some(('', Blue)),
         "lua" => Some(('', Blue)),
@@ -42,6 +43,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "work" => Some(('', White)),
         "toml" => Some(('', White)),
         "lock" => Some(('', White)),
+        "o" => Some(('', White)),
         "excalidraw" => Some(('ﲅ', White)),
         _ => None,
     }
