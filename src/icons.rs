@@ -6,13 +6,13 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
     match extension {
         "h" => Some(('', Magenta)),
         "c" => Some(('', Magenta)),
-        "jpg" | "png" | "webp" => Some(('', Magenta)),
+        "jpg" | "png" | "webp" => Some(('', Magenta)),
         "vim" => Some(('', Green)),
         "zip" => Some(('', Green)),
-        "csv" => Some(('', Green)),
+        "csv" => Some(('󱎏', Green)),
         "scss" => Some(('', Red)),
         "html" => Some(('', Red)),
-        "pdf" => Some(('', Red)),
+        "pdf" => Some(('', Red)),
         "json" => Some(('', Yellow)),
         "yml" => Some(('', Yellow)),
         "yaml" => Some(('', Yellow)),
@@ -21,11 +21,11 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "cjs" => Some(('', Yellow)),
         "jsx" => Some(('', Yellow)),
         "zig" => Some(('', Yellow)),
-        "mp4" | "mkv" => Some(('', Blue)),
+        "mp4" | "mkv" => Some(('󰸬', Blue)),
         "cpp" => Some(('', Blue)),
         "lua" => Some(('', Blue)),
         "py" => Some(('', Blue)),
-        "go" => Some(('ﳑ', Blue)),
+        "go" => Some(('', Blue)),
         "css" => Some(('', Blue)),
         "ts" => Some(('', Blue)),
         "tsx" => Some(('', Blue)),
@@ -34,7 +34,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "txt" => Some(('', White)),
         "mk" => Some(('', White)),
         "rs" => Some(('', White)),
-        "iso" => Some(('', White)),
+        "iso" => Some(('󱁼', White)),
         "md" => Some(('', White)),
         "mdx" => Some(('', White)),
         "wiki" => Some(('', White)),
@@ -44,14 +44,14 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "toml" => Some(('', White)),
         "lock" => Some(('', White)),
         "o" => Some(('', White)),
-        "excalidraw" => Some(('ﲅ', White)),
+        "excalidraw" => Some(('󰞇', White)),
         _ => None,
     }
 }
 
 pub fn match_name_icon(name: &str) -> Option<Icon> {
     match name {
-        "LICENSE" => Some(('ﲘ', White)),
+        "LICENSE" => Some(('', White)),
         "Makefile" => Some(('', White)),
         ".gitignore" => Some(('', Magenta)),
         _ => None,
@@ -61,7 +61,7 @@ pub fn match_name_icon(name: &str) -> Option<Icon> {
 pub fn match_dir_icon(name: &str) -> Option<Icon> {
     match name {
         ".git" => Some(('', Cyan)),
-        "node_modules" => Some(('', Cyan)),
+        "node_modules" => Some(('', Cyan)),
         _ => None,
     }
 }
@@ -77,11 +77,3 @@ pub fn get_default_icon(path_type: PathType) -> Icon {
         PathType::Dir => ('', Cyan),
     }
 }
-
-// var Names = map[string]string{
-// 	"directory":  cyan(""),
-// 	"file":       green(""),
-// 	"LICENSE":    white("ﲘ"),
-// 	"Makefile":   white(""),
-// 	".gitignore": magenta(""),
-// }
