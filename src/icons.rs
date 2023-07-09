@@ -21,6 +21,7 @@ pub fn match_ext_icon(extension: &str) -> Option<Icon> {
         "cjs" => Some(('', Yellow)),
         "jsx" => Some(('', Yellow)),
         "zig" => Some(('', Yellow)),
+        "ml" | "mli" => Some(('', Yellow)),
         "mp4" | "mkv" => Some(('󰸬', Blue)),
         "cpp" => Some(('', Blue)),
         "lua" => Some(('', Blue)),
